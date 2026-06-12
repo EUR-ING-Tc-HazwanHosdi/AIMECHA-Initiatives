@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Contact Me</h1>
+<p>Have a project or question? Message me or use the form below — I reply fast!</p>
+
+<!-- Your Direct Contact -->
+<div style="background:#f1f5f9; padding:1.5rem; border-radius:8px; margin-bottom:2rem;">
+    <p><strong>📞 WhatsApp / Call:</strong> <a href="https://wa.me/60123456789" target="_blank">012-345 6789</a></p>
+    <p><strong>📧 Email:</strong> <a href="mailto:yourname@email.com">yourname@email.com</a></p>
+    <p><strong>📍 Location:</strong> Kota Kinabalu, Sabah, Malaysia</p>
+    <p><strong>⏰ Available:</strong> Monday–Saturday, 9AM–6PM</p>
+</div>
+
+<!-- Contact Form -->
+<form method="POST">
+    <input type="text" name="name" placeholder="Your Name" required>
+    <input type="email" name="email" placeholder="Your Email / WhatsApp" required>
+    <textarea name="message" placeholder="Tell me about your project..." required></textarea>
+    <button type="submit" class="btn">Send Message</button>
+</form>
+{% endblock %}
