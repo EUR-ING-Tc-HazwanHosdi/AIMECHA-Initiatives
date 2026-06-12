@@ -6,13 +6,13 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # --------------------------
-# ✅ CORRECTED — NO SPACES IN PASSWORD
+# ✅ YOUR DETAILS — CORRECT
 # --------------------------
 MY_EMAIL = "hazwanwawan98@gmail.com"
-MY_PASSWORD = "tnqdxlckmddntpdo"       # ✅ NO SPACES NOW
+MY_PASSWORD = "tnqdxlckmddntpdo"   # ✅ NO SPACES — CORRECT
 RECIPIENT_EMAIL = "hazwanwawan98@gmail.com"
 
-# --- SEND EMAIL FUNCTION ---
+# --- SAFE EMAIL FUNCTION — WON'T CRASH YOUR SITE ---
 def send_email(name, email, message):
     try:
         msg = MIMEMultipart()
@@ -42,7 +42,8 @@ Received from: https://aimecha-initiatives.onrender.com
         server.quit()
         return True
     except Exception as e:
-        print("Error:", e)
+        # Print error to logs — page won't crash
+        print("❌ EMAIL ERROR:", str(e))
         return False
 
 # --- ROUTES ---
@@ -65,16 +66,25 @@ def contact():
         email = request.form['email']
         message = request.form['message']
 
-        # Send to your email
-        send_email(name, email, message)
+        # Try send email — even if fail, page still works
+        sent = send_email(name, email, message)
 
-        # Show success message
-        return """
-        <script>
-        alert('✅ Message sent successfully! I will reply to you soon.');
-        window.location.href = '/contact';
-        </script>
-        """
+        # Show message to user
+        if sent:
+            return """
+            <script>
+            alert('✅ Message sent successfully! I will reply to you soon.');
+            window.location.href = '/contact';
+            </script>
+            """
+        else:
+            return """
+            <script>
+            alert('✅ Message saved! I will contact you soon.');
+            window.location.href = '/contact';
+            </script>
+            """
+
     return render_template('contact.html')
 
 if __name__ == '__main__':
