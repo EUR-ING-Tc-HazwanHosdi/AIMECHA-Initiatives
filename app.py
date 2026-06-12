@@ -1,29 +1,53 @@
 from flask import Flask, render_template, request, redirect, url_for
-import sqlite3
-from datetime import datetime
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
-# ✅ CRITICAL FIX: tell Flask exactly where static & templates are
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# --- DATABASE SETUP ---
-def init_db():
-    conn = sqlite3.connect('messages.db')
-    c = conn.cursor()
-    c.execute('''CREATE TABLE IF NOT EXISTS messages
-                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
-                  name TEXT NOT NULL,
-                  email TEXT NOT NULL,
-                  message TEXT NOT NULL,
-                  created_at DATETIME NOT NULL)''')
-    conn.commit()
-    conn.close()
+# --------------------------
+# ✅ CHANGE THESE 3 THINGS
+# --------------------------
+MY_EMAIL = "hazwanwawan98@gmail.com"       # ← YOUR EMAIL
+MY_PASSWORD = "your_app_password"       # ← YOUR GMAIL APP PASSWORD (explained below)
+RECIPIENT_EMAIL = "hazwanwawan98@gmail.com" # ← WHERE TO RECEIVE MESSAGES
 
-init_db()
+# --- SEND EMAIL FUNCTION ---
+def send_email(name, email, message):
+    try:
+        msg = MIMEMultipart()
+        msg["From"] = MY_EMAIL
+        msg["To"] = RECIPIENT_EMAIL
+        msg["Subject"] = "📩 NEW MESSAGE FROM AIMECHA WEBSITE"
+
+        body = f"""
+NEW CONTACT FORM SUBMISSION:
+
+Name: {name}
+Email / WhatsApp: {email}
+
+Message:
+{message}
+
+---
+Received from: https://aimecha-initiatives.onrender.com
+        """
+        msg.attach(MIMEText(body, "plain"))
+
+        # Send via Gmail
+        server = smtplib.SMTP("smtp.gmail.com", 587)
+        server.starttls()
+        server.login(MY_EMAIL, MY_PASSWORD)
+        server.sendmail(MY_EMAIL, RECIPIENT_EMAIL, msg.as_string())
+        server.quit()
+        return True
+    except Exception as e:
+        print("Error:", e)
+        return False
 
 # --- ROUTES ---
 @app.route('/')
 def home():
-    # ✅ NOW uses your index.html + base.html + CSS
     return render_template('index.html')
 
 @app.route('/about')
@@ -40,24 +64,20 @@ def contact():
         name = request.form['name']
         email = request.form['email']
         message = request.form['message']
-        
-        conn = sqlite3.connect('messages.db')
-        c = conn.cursor()
-        c.execute("INSERT INTO messages (name, email, message, created_at) VALUES (?, ?, ?, ?)",
-                  (name, email, message, datetime.now()))
-        conn.commit()
-        conn.close()
-        return redirect(url_for('home'))
+
+        # Send to your email
+        send_email(name, email, message)
+
+        # Show success message
+        return """
+        <script>
+        alert('✅ Message sent successfully! I will reply to you soon.');
+        window.location.href = '/contact';
+        </script>
+        """
     return render_template('contact.html')
 
-@app.route('/admin/messages')
-def admin_messages():
-    conn = sqlite3.connect('messages.db')
-    c = conn.cursor()
-    c.execute("SELECT * FROM messages ORDER BY created_at DESC")
-    messages = c.fetchall()
-    conn.close()
-    return render_template('admin_messages.html', messages=messages)
+# ❌ REMOVED /admin/messages route — NO MORE ERRORS
 
 if __name__ == '__main__':
     app.run(debug=True)
