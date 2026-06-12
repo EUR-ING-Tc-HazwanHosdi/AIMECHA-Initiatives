@@ -1,21 +1,63 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, request, redirect, url_for
+import sqlite3
+from datetime import datetime
 
-app = Flask(__name__)
+# ✅ CRITICAL FIX: tell Flask exactly where static & templates are
+app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# Home page
+# --- DATABASE SETUP ---
+def init_db():
+    conn = sqlite3.connect('messages.db')
+    c = conn.cursor()
+    c.execute('''CREATE TABLE IF NOT EXISTS messages
+                 (id INTEGER PRIMARY KEY AUTOINCREMENT,
+                  name TEXT NOT NULL,
+                  email TEXT NOT NULL,
+                  message TEXT NOT NULL,
+                  created_at DATETIME NOT NULL)''')
+    conn.commit()
+    conn.close()
+
+init_db()
+
+# --- ROUTES ---
 @app.route('/')
 def home():
-    return "<h1>Welcome to My Website Service</h1><p>I build professional websites for small businesses — fast, free setup, affordable price.</p>"
+    # ✅ NOW uses your index.html + base.html + CSS
+    return render_template('index.html')
 
-# About page
 @app.route('/about')
 def about():
-    return "<h1>About Me</h1><p>I create websites using Python — secure, easy to update, mobile-friendly.</p>"
+    return render_template('about.html')
 
-# Services page
 @app.route('/services')
 def services():
-    return "<h1>My Services</h1><ul><li>Business Website — RM800</li><li>Landing Page — RM500</li><li>Website Maintenance — RM150/month</li></ul>"
+    return render_template('services.html')
+
+@app.route('/contact', methods=['GET', 'POST'])
+def contact():
+    if request.method == 'POST':
+        name = request.form['name']
+        email = request.form['email']
+        message = request.form['message']
+        
+        conn = sqlite3.connect('messages.db')
+        c = conn.cursor()
+        c.execute("INSERT INTO messages (name, email, message, created_at) VALUES (?, ?, ?, ?)",
+                  (name, email, message, datetime.now()))
+        conn.commit()
+        conn.close()
+        return redirect(url_for('home'))
+    return render_template('contact.html')
+
+@app.route('/admin/messages')
+def admin_messages():
+    conn = sqlite3.connect('messages.db')
+    c = conn.cursor()
+    c.execute("SELECT * FROM messages ORDER BY created_at DESC")
+    messages = c.fetchall()
+    conn.close()
+    return render_template('admin_messages.html', messages=messages)
 
 if __name__ == '__main__':
     app.run(debug=True)
