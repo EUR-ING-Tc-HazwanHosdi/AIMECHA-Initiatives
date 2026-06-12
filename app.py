@@ -6,11 +6,11 @@ from email.mime.multipart import MIMEMultipart
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # --------------------------
-# ✅ CHANGE THESE 3 THINGS
+# ✅ CORRECTED — NO SPACES IN PASSWORD
 # --------------------------
-MY_EMAIL = "hazwanwawan98@gmail.com"       # ← YOUR EMAIL
-MY_PASSWORD = "tnqdxlckmddntpdo"       # ← YOUR GMAIL APP PASSWORD (explained below)
-RECIPIENT_EMAIL = "hazwanwawan98@gmail.com" # ← WHERE TO RECEIVE MESSAGES
+MY_EMAIL = "hazwanwawan98@gmail.com"
+MY_PASSWORD = "tnqdxlckmddntpdo"       # ✅ NO SPACES NOW
+RECIPIENT_EMAIL = "hazwanwawan98@gmail.com"
 
 # --- SEND EMAIL FUNCTION ---
 def send_email(name, email, message):
@@ -76,8 +76,6 @@ def contact():
         </script>
         """
     return render_template('contact.html')
-
-# ❌ REMOVED /admin/messages route — NO MORE ERRORS
 
 if __name__ == '__main__':
     app.run(debug=True)
