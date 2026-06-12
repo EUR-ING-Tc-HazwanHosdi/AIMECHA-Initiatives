@@ -9,7 +9,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 # ✅ YOUR DETAILS — CORRECT
 # --------------------------
 MY_EMAIL = "hazwanwawan98@gmail.com"
-MY_PASSWORD = "tnqdxlckmddntpdo"   # ✅ NO SPACES — CORRECT
+MY_PASSWORD = "sjau korg kypq rbmg"   # ✅ NO SPACES — CORRECT
 RECIPIENT_EMAIL = "hazwanwawan98@gmail.com"
 
 # --- SAFE EMAIL FUNCTION — WON'T CRASH YOUR SITE ---
