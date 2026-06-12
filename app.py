@@ -9,7 +9,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 # ✅ CHANGE THESE 3 THINGS
 # --------------------------
 MY_EMAIL = "hazwanwawan98@gmail.com"       # ← YOUR EMAIL
-MY_PASSWORD = "tnqd xlck mddn tpdo"       # ← YOUR GMAIL APP PASSWORD (explained below)
+MY_PASSWORD = "tnqdxlckmddntpdo"       # ← YOUR GMAIL APP PASSWORD (explained below)
 RECIPIENT_EMAIL = "hazwanwawan98@gmail.com" # ← WHERE TO RECEIVE MESSAGES
 
 # --- SEND EMAIL FUNCTION ---
