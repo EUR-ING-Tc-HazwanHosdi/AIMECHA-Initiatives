@@ -7,8 +7,9 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Background Particles -->
+    <!-- Futuristic Background Elements -->
     <div id="particles"></div>
+    <div class="bg-grid"></div>
 
     <!-- Navigation -->
     <nav>
@@ -28,24 +29,21 @@
 
     <!-- Footer -->
     <footer>
-        <p>© 2026 AIMeCHA Initiatives — Innovating the Future</p>
+        <p>© 2026 AIMeCHA Initiatives — AI-Powered Engineering Solutions | Kota Kinabalu, Sabah</p>
     </footer>
 
-    <!-- Futuristic Background Script -->
+    <!-- Particles Script -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         particlesJS('particles', {
             particles: {
-                number: { value: 60, density: { enable: true, value_area: 800 } },
-                color: { value: '#00F0FF' },
+                number: { value: 50, density: { enable: true, value_area: 800 } },
+                color: { value: '#00B4D8' },
                 shape: { type: 'circle' },
-                opacity: { value: 0.5, random: true },
-                size: { value: 2, random: true },
-                line_linked: { enable: true, distance: 150, color: '#7928CA', opacity: 0.2, width: 1 },
-                move: { enable: true, speed: 1.5, direction: 'none', random: false, straight: false, out_mode: 'out' }
-            },
-            interactivity: {
-                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' } }
+                opacity: { value: 0.4, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: { enable: true, distance: 140, color: '#28C76F', opacity: 0.15, width: 1 },
+                move: { enable: true, speed: 1.2, direction: 'none', random: false, straight: false, out_mode: 'out' }
             }
         });
     </script>
