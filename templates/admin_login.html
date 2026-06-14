@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Login | AIMeCHA</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <style>
+        body {
+            background: linear-gradient(135deg, #050F1E, #0A1A2F);
+            color: #E0EFFF;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Segoe UI', sans-serif;
+        }
+        .login-box {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid #00B4D8;
+            border-radius: 16px;
+            padding: 2.5rem 2rem;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 0 20px rgba(0,180,216,0.15);
+            animation: pulseGlow 3s infinite;
+        }
+        h2 {
+            color: #00B4D8;
+            margin-bottom: 1.5rem;
+        }
+        .flash {
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            background: rgba(40,199,111,0.15);
+            color: #28C76F;
+        }
+        .flash.error {
+            background: rgba(255,70,70,0.15);
+            color: #FF6B6B;
+        }
+        input {
+            width: 100%;
+            padding: 0.9rem;
+            margin: 0.8rem 0;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(0,180,216,0.3);
+            border-radius: 8px;
+            color: #E0EFFF;
+            font-size: 1rem;
+            outline: none;
+        }
+        input:focus {
+            border-color: #28C76F;
+            box-shadow: 0 0 8px rgba(40,199,111,0.2);
+        }
+        button {
+            width: 100%;
+            padding: 0.9rem;
+            margin-top: 1rem;
+            background: linear-gradient(90deg, #28C76F, #00B4D8);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(40,199,111,0.3);
+        }
+        .back {
+            display: inline-block;
+            margin-top: 1.5rem;
+            color: #00B4D8;
+            text-decoration: none;
+            font-size: 0.9rem;
+        }
+        .back:hover {
+            color: #28C76F;
+        }
+        @keyframes pulseGlow {
+            0%,100% { box-shadow: 0 0 15px rgba(0, 240, 255, 0.2); }
+            50% { box-shadow: 0 0 22px rgba(0, 240, 255, 0.35); }
+        }
+    </style>
+</head>
+<body>
+    <div class="login-box">
+        <h2>🔐 Admin Login</h2>
+
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="flash {% if '❌' in messages[0] %}error{% endif %}">
+              {{ messages[0] }}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        <form method="POST">
+            <input type="password" name="password" placeholder="Enter Admin Password" required>
+            <button type="submit">Login</button>
+        </form>
+
+        <a href="/" class="back">← Back to Website</a>
+    </div>
+</body>
+</html>
