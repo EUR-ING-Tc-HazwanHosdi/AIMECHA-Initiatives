@@ -3,10 +3,15 @@
 {% block content %}
 <section class="section">
     <h2>Get In Touch</h2>
-    <p style="font-size: 1.1rem; margin-bottom: 2rem; max-width: 700px;">
-        Reach out to us — we’re ready to build the future together.
-    </p>
+    <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem;">Reach out to us — we’re ready to build the future together.</p>
 
+    <!-- ✅ CLICKABLE PHONE & EMAIL — RIGHT ABOVE BOX -->
+    <div class="contact-info-top">
+        <p>📞 Phone: <a href="tel:+60165677176">+60 16-567 7176</a></p>
+        <p>📧 Email: <a href="mailto:hazwanwawan98@gmail.com">hazwanwawan98@gmail.com</a></p>
+    </div>
+
+    <!-- ✅ ENQUIRY BOX — SAVES ONLY TO DATABASE -->
     <form class="contact-form" method="POST">
         <div class="form-group">
             <input type="text" name="name" id="name" required>
@@ -22,5 +27,6 @@
         </div>
         <button type="submit" class="btn">Send Message 🚀</button>
     </form>
+
 </section>
 {% endblock %}
