@@ -1,42 +1,49 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>My Services & Prices</h1>
-<div class="price-table">
-    <div class="package">
-        <h3>Basic Website</h3>
-        <p class="price">RM 500</p>
-        <ul>
-            <li>3–4 Pages (Home, About, Contact)</li>
-            <li>Mobile-friendly</li>
-            <li>Contact Form</li>
-            <li>Free Hosting (1 month)</li>
-        </ul>
-        <a href="/contact" class="btn">Order Now</a>
-    </div>
+<section class="section">
+    <h2 style="text-align: center; margin-bottom: 4rem;">My Services & Prices</h2>
 
-    <div class="package popular">
-        <h3>Business Website</h3>
-        <p class="price">RM 900</p>
-        <ul>
-            <li>5–7 Pages + Gallery</li>
-            <li>Google Map Integration</li>
-            <li>Basic SEO</li>
-            <li>1 Year Free Support</li>
-        </ul>
-        <a href="/contact" class="btn">Best Choice</a>
-    </div>
+    <div class="card-grid">
+        <!-- Basic Website -->
+        <div class="card">
+            <h3>Basic Website</h3>
+            <p style="font-size: 1.4rem; color: var(--accent-green); font-weight: bold;">RM 500</p>
+            <ul style="margin: 1rem 0; padding-left: 1.2rem;">
+                <li>3–4 Pages (Home, About, Contact)</li>
+                <li>Mobile-friendly</li>
+                <li>Contact Form</li>
+                <li>Free Hosting (1 month)</li>
+            </ul>
+            <a href="/contact" class="btn btn-primary" style="width: 100%; display: inline-block; text-align: center; margin-top: 1rem;">Order Now</a>
+        </div>
 
-    <div class="package">
-        <h3>Custom System</h3>
-        <p class="price">RM 1,500+</p>
-        <ul>
-            <li>Booking / Order System</li>
-            <li>Admin Dashboard</li>
-            <li>User Login</li>
-            <li>Full Custom Features</li>
-        </ul>
-        <a href="/contact" class="btn">Discuss Project</a>
+        <!-- Business Website -->
+        <div class="card" style="border-color: var(--accent-purple); transform: scale(1.05);">
+            <span style="background: var(--accent-purple); color: white; padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: bold;">BEST CHOICE</span>
+            <h3>Business Website</h3>
+            <p style="font-size: 1.4rem; color: var(--accent-green); font-weight: bold;">RM 900</p>
+            <ul style="margin: 1rem 0; padding-left: 1.2rem;">
+                <li>5–7 Pages + Gallery</li>
+                <li>Google Map Integration</li>
+                <li>Basic SEO</li>
+                <li>1 Year Free Support</li>
+            </ul>
+            <a href="/contact" class="btn btn-purple" style="width: 100%; display: inline-block; text-align: center; margin-top: 1rem;">Order Now</a>
+        </div>
+
+        <!-- Custom System -->
+        <div class="card">
+            <h3>Custom System</h3>
+            <p style="font-size: 1.4rem; color: var(--accent-green); font-weight: bold;">RM 1,500+</p>
+            <ul style="margin: 1rem 0; padding-left: 1.2rem;">
+                <li>Booking / Order System</li>
+                <li>Admin Dashboard</li>
+                <li>User Login</li>
+                <li>Full custom features</li>
+            </ul>
+            <a href="/contact" class="btn btn-outline" style="width: 100%; display: inline-block; text-align: center; margin-top: 1rem;">Discuss Project</a>
+        </div>
     </div>
-</div>
+</section>
 {% endblock %}
