@@ -1,24 +1,128 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIMeCHA | AI‑Powered Engineering Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#1A1B1F',
+                        primary: '#40C92A',  // logo green
+                        secondary: '#0096C7',// logo blue‑teal
+                        light: '#F3F4F6',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gradient-text {
+            background: linear-gradient(90deg, #40C92A 0%, #0096C7 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .btn-gradient {
+            background: linear-gradient(90deg, #40C92A, #0096C7);
+        }
+        .btn-gradient:hover {
+            background: linear-gradient(90deg, #36AD24, #00779E);
+        }
+    </style>
+</head>
+<body class="bg-dark text-light font-sans">
 
-{% block content %}
-<section class="hero">
-    <h1>Welcome to My Website Service</h1>
-    <p>I build fast, secure, mobile-friendly websites using Python. Perfect for shops, cafes, services, and personal brands in Sabah.</p>
-    <a href="/services" class="btn">View My Packages</a>
+<!-- Navbar -->
+<nav class="fixed w-full bg-dark/90 backdrop-blur-md z-50 shadow-md">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        <a href="/" class="flex items-center gap-3">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="AIMeCHA Logo" class="h-12">
+            <span class="text-2xl font-bold gradient-text">AIMeCHA</span>
+        </a>
+        <div class="hidden md:flex gap-8">
+            <a href="/" class="hover:text-primary transition-colors">Home</a>
+            <a href="/about" class="hover:text-primary transition-colors">About</a>
+            <a href="/services" class="hover:text-primary transition-colors">Services</a>
+            <a href="/contact" class="hover:text-primary transition-colors">Contact</a>
+        </div>
+        <button class="md:hidden text-2xl" id="menuBtn">
+            <i class="fa fa-bars"></i>
+        </button>
+    </div>
+    <div id="mobileMenu" class="hidden md:hidden bg-dark/95 px-4 pb-4">
+        <a href="/" class="block py-2 hover:text-primary">Home</a>
+        <a href="/about" class="block py-2 hover:text-primary">About</a>
+        <a href="/services" class="block py-2 hover:text-primary">Services</a>
+        <a href="/contact" class="block py-2 hover:text-primary">Contact</a>
+    </div>
+</nav>
+
+<!-- Hero -->
+<section class="min-h-screen flex items-center pt-20">
+    <div class="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+        <div>
+            <h1 class="text-[clamp(2.2rem,5vw,4rem)] font-bold leading-tight">
+                <span class="gradient-text">AI‑Powered</span><br>
+                Engineering Solutions
+            </h1>
+            <p class="text-gray-300 mt-6 text-lg">
+                Custom websites, automation, and smart systems — built fast, modern, and affordable for Sabah & Malaysia.
+            </p>
+            <div class="mt-8 flex flex-wrap gap-4">
+                <a href="/services" class="btn-gradient px-8 py-3 rounded-full font-semibold shadow-lg hover:shadow‑2xl transition">View Services</a>
+                <a href="/contact" class="border-2 border-primary/60 text-primary hover:bg-primary/10 px-8 py-3 rounded-full transition">Get Quote</a>
+            </div>
+        </div>
+        <div class="hidden md:block">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="AIMeCHA" class="w-full max-w-md mx-auto">
+        </div>
+    </div>
 </section>
 
-<section class="features">
-    <div class="feature-box">
-        <h3>✅ 100% Custom</h3>
-        <p>Built exactly how you want — no boring templates</p>
-    </div>
-    <div class="feature-box">
-        <h3>✅ Mobile Ready</h3>
-        <p>Looks great on phone, tablet, and computer</p>
-    </div>
-    <div class="feature-box">
-        <h3>✅ Affordable Price</h3>
-        <p>Start from only RM500 — best value in KK</p>
+<!-- Features -->
+<section class="py-20 bg-gray-900/50">
+    <div class="container mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Why Choose AIMeCHA</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="bg-dark/60 p-8 rounded-xl hover:shadow‑xl transition">
+                <i class="fa fa-code text‑4xl text‑primary mb‑4"></i>
+                <h3 class="text‑xl font‑semibold mb‑2">100% Custom</h3>
+                <p class="text‑gray‑400">Built exactly to your needs — no rigid templates.</p>
+            </div>
+            <div class="bg-dark/60 p-8 rounded-xl hover:shadow‑xl transition">
+                <i class="fa fa‑mobile text‑4xl text‑secondary mb‑4"></i>
+                <h3 class="text‑xl font‑semibold mb‑2">Mobile‑Ready</h3>
+                <p class="text‑gray‑400">Perfect look on phones, tablets & desktops.</p>
+            </div>
+            <div class="bg-dark/60 p-8 rounded-xl hover:shadow‑xl transition">
+                <i class="fa fa‑line‑chart text‑4xl text‑primary mb‑4"></i>
+                <h3 class="text‑xl font‑semibold mb‑2">Affordable Price</h3>
+                <p class="text‑gray‑400">Start from RM500 — great value in Kota Kinabalu.</p>
+            </div>
+        </div>
     </div>
 </section>
-{% endblock %}
+
+<!-- Footer -->
+<footer class="bg-dark py-8 border‑t border‑gray‑700">
+    <div class="container mx‑auto px‑4 text‑center text‑gray‑400 text‑sm">
+        <p>© 2026 <span class="gradient‑text font‑bold">AIMeCHA</span> — AI‑Powered Engineering Solutions</p>
+        <p class="mt‑2">📞 +6011‑656 76997 | ✉ hazwanwawan98@gmail.com | 📍 Kota Kinabalu, Sabah</p>
+    </div>
+</footer>
+
+<script>
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+</script>
+</body>
+</html>
