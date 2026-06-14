@@ -8,7 +8,7 @@ app = Flask(__name__, static_folder='static', template_folder='templates')
 
 # Environment variables — safe for Render
 MY_EMAIL = os.getenv("MY_EMAIL", "hazwanwawan98@gmail.com")
-MY_PASSWORD = os.getenv("MY_PASSWORD", "")
+MY_PASSWORD = os.getenv("yaqd xgra vlgd jzqp", "")
 RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL", "hazwanwawan98@gmail.com")
 
 def send_email(name, email, message):
