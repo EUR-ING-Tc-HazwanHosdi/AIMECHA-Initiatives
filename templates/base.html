@@ -3,34 +3,51 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Website Service | Kota Kinabalu</title>
+    <title>AIMeCHA Initiatives</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Navigation Menu -->
-    <nav class="navbar">
-        <div class="container">
-            <h1 class="logo">AIMECHA Websites</h1>
-            <ul class="nav-links">
-                <li><a href="/">Home</a></li>
-                <li><a href="/about">About</a></li>
-                <li><a href="/services">Services</a></li>
-                <li><a href="/contact">Contact</a></li>
-            </ul>
-        </div>
+    <!-- Background Particles -->
+    <div id="particles"></div>
+
+    <!-- Navigation -->
+    <nav>
+        <a href="/"><img src="{{ url_for('static', filename='logo.png') }}" alt="AIMeCHA Logo" class="logo"></a>
+        <ul class="nav-links">
+            <li><a href="/" {% if request.endpoint=='home' %}class="active"{% endif %}>Home</a></li>
+            <li><a href="/about" {% if request.endpoint=='about' %}class="active"{% endif %}>About</a></li>
+            <li><a href="/services" {% if request.endpoint=='services' %}class="active"{% endif %}>Services</a></li>
+            <li><a href="/contact" {% if request.endpoint=='contact' %}class="active"{% endif %}>Contact</a></li>
+        </ul>
     </nav>
 
-    <!-- Page Content (changes for each page) -->
-    <div class="container content">
+    <!-- Page Content -->
+    <main class="container">
         {% block content %}{% endblock %}
-    </div>
+    </main>
 
     <!-- Footer -->
-   <footer class="footer">
-    <div class="container">
-        <p>© 2026 AIMECHA Initiatives | Professional Websites | Kota Kinabalu, Sabah</p>
-        <p>📞 WhatsApp: **011-656 76997** | 📧 Email: hazwanwawan98@gmail.com | 📍 Kota Kinabalu, Sabah</p>
-    </div>
-</footer>
+    <footer>
+        <p>© 2026 AIMeCHA Initiatives — Innovating the Future</p>
+    </footer>
+
+    <!-- Futuristic Background Script -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        particlesJS('particles', {
+            particles: {
+                number: { value: 60, density: { enable: true, value_area: 800 } },
+                color: { value: '#00F0FF' },
+                shape: { type: 'circle' },
+                opacity: { value: 0.5, random: true },
+                size: { value: 2, random: true },
+                line_linked: { enable: true, distance: 150, color: '#7928CA', opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1.5, direction: 'none', random: false, straight: false, out_mode: 'out' }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: 'grab' }, onclick: { enable: true, mode: 'push' } }
+            }
+        });
+    </script>
 </body>
 </html>
