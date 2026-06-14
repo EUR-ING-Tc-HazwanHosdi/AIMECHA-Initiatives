@@ -1,39 +1,44 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>About Me</h1>
+<section class="section">
+    <div style="max-width: 800px;">
+        <h2>About AIMeCHA Initiatives</h2>
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; align-items: center; margin: 2rem 0;">
-    <div>
-        <h2>Hi, I’m Hazwan — Founder of AIMECHA Initiatives</h2>
-        <p>I’m a web developer based in <strong>Kota Kinabalu, Sabah</strong>, and I build professional, affordable websites for local businesses, shops, cafes, services, and personal brands across Sabah.</p>
+        <p>I’m a web developer based in Kota Kinabalu, Sabah, and I build professional, affordable websites for local businesses, shops, cafes, services, and personal brands across Sabah.</p>
 
-        <p>What makes me different? I don’t just build websites — I build websites that <strong>help you get more customers</strong>.</p>
+        <p>What makes me different? I don’t just build websites — I build websites that help you get more customers.</p>
 
-        <p>I started AIMECHA Initiatives because I saw too many small businesses here still don’t have a website — or have one that looks old, slow, or doesn’t work on mobile. My goal: make professional web presence <strong>simple, fast, and affordable</strong> for everyone in Sabah.</p>
+        <p>I started AIMeCHA Initiatives because I saw too many small businesses here still don’t have a website — or have one that looks old, slow, or doesn’t work on mobile. My goal: make professional web presence simple, fast, and affordable for everyone in Sabah.</p>
 
-        <h3 style="margin-top: 1.5rem;">✅ Why choose me?</h3>
-        <ul style="line-height: 1.8; padding-left: 1.2rem;">
-            <li>💻 <strong>Local & easy to reach</strong> — based right here in KK, you can meet or chat anytime</li>
-            <li>⚡ <strong>Fast delivery</strong> — your site ready in 3–5 days</li>
-            <li>📱 <strong>Mobile-first design</strong> — looks perfect on phones, tablets & computers</li>
-            <li>💰 <strong>Fair, transparent pricing</strong> — starts from only RM500, no hidden fees</li>
-            <li>🛠 <strong>Free support</strong> — 1 month free updates & help after launch</li>
-            <li>🔒 <strong>Secure & reliable</strong> — built with modern Python/Flask technology</li>
+
+        <h3 style="margin-top: 2rem; color: var(--accent-blue);">✅ Why choose me?</h3>
+        <ul style="list-style: none; padding-left: 0; margin: 1.5rem 0;">
+            <li style="margin-bottom: 0.8rem;">🏙️ <strong>Local & easy to reach</strong> — based right here in KK, you can meet or chat anytime</li>
+            <li style="margin-bottom: 0.8rem;">⚡ <strong>Fast delivery</strong> — your site ready in 3–5 days</li>
+            <li style="margin-bottom: 0.8rem;">📱 <strong>Mobile-first design</strong> — looks perfect on phones, tablets & computers</li>
+            <li style="margin-bottom: 0.8rem;">💰 <strong>Fair, transparent pricing</strong> — starts from only RM500, no hidden fees</li>
+            <li style="margin-bottom: 0.8rem;">🛟 <strong>Free support</strong> — 1 month free updates & help after launch</li>
+            <li style="margin-bottom: 0.8rem;">🔒 <strong>Secure & reliable</strong> — built with modern Python/Flask technology</li>
         </ul>
 
-        <p style="margin-top: 1.5rem;">Whether you run a small shop, a restaurant, a service business, or just want to showcase your work — I’ll create a website that fits your brand, your budget, and helps you grow.</p>
+        <p>Whether you run a small shop, a restaurant, a service business, or just want to showcase your work — I’ll create a website that fits your growth.</p>
 
-        <a href="/contact" class="btn" style="margin-top: 1rem;">Let’s Talk About Your Project</a>
+        <div class="btn-group" style="margin-top: 2rem;">
+            <a href="/contact" class="btn btn-purple">Let’s Talk About Your Project</a>
+        </div>
     </div>
 
-    <div style="background: #f1f5f9; padding: 2rem; border-radius: 10px; text-align: center;">
-        <h3>My Mission</h3>
-        <p style="font-size: 1.1rem; font-style: italic;">"To help every Sabah business shine online — simple, beautiful, and affordable."</p>
-
-        <h3 style="margin-top: 2rem;">My Promise</h3>
-        <p>You get a website you’re proud of — and I’m only happy when you are 100% satisfied.</p>
+    <!-- High Contrast White Boxes -->
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 4rem;">
+        <div class="highlight-box">
+            <h3>My Mission</h3>
+            <p>"To help every Sabah business shine online — simple, beautiful, and affordable."</p>
+        </div>
+        <div class="highlight-box">
+            <h3>My Promise</h3>
+            <p>You get a website you’re proud of — and I’m only happy when you are 100% satisfied.</p>
+        </div>
     </div>
-</div>
-
+</section>
 {% endblock %}
