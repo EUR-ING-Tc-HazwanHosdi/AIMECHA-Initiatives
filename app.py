@@ -1,47 +1,29 @@
-from flask import Flask, render_template, request
-import smtplib
-from email.mime.text import MIMEText
-from email.mime.multipart import MIMEMultipart
+from flask import Flask, render_template, request, redirect, url_for, flash
+from flask_sqlalchemy import SQLAlchemy
 import os
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
+app.secret_key = 'aimecha-secret-key-2026'
 
-# ✅ Environment Variables — SET THESE IN RENDER
-MY_EMAIL = os.getenv("MY_EMAIL", "").strip()
-MY_PASSWORD = os.getenv("MY_PASSWORD", "").strip()
-RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL", "").strip()
+# ✅ DATABASE ONLY — NO EMAIL
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+db = SQLAlchemy(app)
 
-def send_email(name, email, message):
-    if not MY_EMAIL or not MY_PASSWORD or not RECIPIENT_EMAIL:
-        print("❌ Missing credentials!")
-        return False
-    try:
-        msg = MIMEMultipart()
-        msg["From"] = MY_EMAIL
-        msg["To"] = RECIPIENT_EMAIL
-        msg["Subject"] = "📩 New Message — AIMeCHA Website"
-        body = f"""
-Name: {name}
-Email: {email}
-Message:
-{message}
----
-From: AIMeCHA Website
-        """
-        msg.attach(MIMEText(body, "plain"))
+class Message(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(100), nullable=False)
+    email = db.Column(db.String(120), nullable=False)
+    message = db.Column(db.Text, nullable=False)
+    created_at = db.Column(db.DateTime, default=db.func.now())
 
-        server = smtplib.SMTP("smtp.gmail.com", 587)
-        server.ehlo()
-        server.starttls()
-        server.ehlo()
-        server.login(MY_EMAIL, MY_PASSWORD)
-        server.sendmail(MY_EMAIL, RECIPIENT_EMAIL, msg.as_string())
-        server.quit()
-        return True
-    except Exception as e:
-        print("❌ Error:", str(e))
-        return False
+    def __repr__(self):
+        return f'<Message {self.name}>'
 
+with app.app_context():
+    db.create_all()
+
+# ROUTES
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -60,13 +42,19 @@ def contact():
         name = request.form.get('name', '').strip()
         email = request.form.get('email', '').strip()
         message = request.form.get('message', '').strip()
+
         if not name or not email or not message:
-            return "<script>alert('⚠️ Please fill all fields!');history.back();</script>"
-        sent = send_email(name, email, message)
-        if sent:
-            return "<script>alert('✅ Message sent successfully!');history.back();</script>"
-        else:
-            return "<script>alert('❌ Failed to send. Check settings!');history.back();</script>"
+            flash('⚠️ Please fill all fields!')
+            return redirect(url_for('contact'))
+
+        # ✅ SAVE ONLY TO DATABASE
+        new_msg = Message(name=name, email=email, message=message)
+        db.session.add(new_msg)
+        db.session.commit()
+
+        flash('✅ Message saved successfully!')
+        return redirect(url_for('contact'))
+
     return render_template('contact.html')
 
 if __name__ == '__main__':
