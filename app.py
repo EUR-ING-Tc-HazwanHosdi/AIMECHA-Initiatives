@@ -1,52 +1,42 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request
 import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
+import os
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# --------------------------
-# ✅ YOUR DETAILS — CORRECT
-# --------------------------
-MY_EMAIL = "hazwanwawan98@gmail.com"
-MY_PASSWORD = "sjau korg kypq rbmg"   # ✅ NO SPACES — CORRECT
-RECIPIENT_EMAIL = "hazwanwawan98@gmail.com"
+# Environment variables — safe for Render
+MY_EMAIL = os.getenv("MY_EMAIL", "hazwanwawan98@gmail.com")
+MY_PASSWORD = os.getenv("MY_PASSWORD", "")
+RECIPIENT_EMAIL = os.getenv("RECIPIENT_EMAIL", "hazwanwawan98@gmail.com")
 
-# --- SAFE EMAIL FUNCTION — WON'T CRASH YOUR SITE ---
 def send_email(name, email, message):
     try:
         msg = MIMEMultipart()
         msg["From"] = MY_EMAIL
         msg["To"] = RECIPIENT_EMAIL
-        msg["Subject"] = "📩 NEW MESSAGE FROM AIMECHA WEBSITE"
-
+        msg["Subject"] = "📩 New Message — AIMeCHA Website"
         body = f"""
-NEW CONTACT FORM SUBMISSION:
-
 Name: {name}
-Email / WhatsApp: {email}
-
+Email: {email}
 Message:
 {message}
-
 ---
-Received from: https://aimecha-initiatives.onrender.com
+From: AIMeCHA Website
         """
         msg.attach(MIMEText(body, "plain"))
 
-        # Send via Gmail
         server = smtplib.SMTP("smtp.gmail.com", 587)
         server.starttls()
-        server.login(MY_EMAIL, MY_PASSWORD)
+        server.login(MY_EMAIL, MY_PASSWORD.strip())
         server.sendmail(MY_EMAIL, RECIPIENT_EMAIL, msg.as_string())
         server.quit()
         return True
     except Exception as e:
-        # Print error to logs — page won't crash
-        print("❌ EMAIL ERROR:", str(e))
+        print("❌ Email error:", str(e))
         return False
 
-# --- ROUTES ---
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -62,30 +52,16 @@ def services():
 @app.route('/contact', methods=['GET', 'POST'])
 def contact():
     if request.method == 'POST':
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
-
-        # Try send email — even if fail, page still works
+        name = request.form.get('name', 'No Name')
+        email = request.form.get('email', 'No Email')
+        message = request.form.get('message', 'No Message')
         sent = send_email(name, email, message)
-
-        # Show message to user
         if sent:
-            return """
-            <script>
-            alert('✅ Message sent successfully! I will reply to you soon.');
-            window.location.href = '/contact';
-            </script>
-            """
+            return "<script>alert('✅ Message sent!');history.back();</script>"
         else:
-            return """
-            <script>
-            alert('✅ Message saved! I will contact you soon.');
-            window.location.href = '/contact';
-            </script>
-            """
-
+            return "<script>alert('⚠️ Could not send now.');history.back();</script>"
     return render_template('contact.html')
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    port = int(os.getenv("PORT", 5000))
+    app.run(host='0.0.0.0', port=port, debug=False)
