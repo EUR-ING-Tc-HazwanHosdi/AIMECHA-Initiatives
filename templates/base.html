@@ -3,11 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AIMeCHA Initiatives</title>
+
+    <!-- ✅ SEO META TAGS — ADDED, NO VISUAL CHANGE -->
+    <title>{% block title %}AIMeCHA Initiatives | AI-Powered Engineering Solutions{% endblock %}</title>
+    <meta name="description" content="{% block meta_description %}AIMeCHA Initiatives provides custom web development, automation, and digital solutions for businesses across Sabah and Malaysia.{% endblock %}">
+    <meta name="author" content="AIMeCHA Initiatives">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="{{ request.url }}">
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="{% block og_title %}AIMeCHA Initiatives{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Modern websites, smart automation, and reliable tech solutions built for your business.{% endblock %}">
+    <meta property="og:url" content="https://aimecha-initiatives.onrender.com">
+
+    <!-- ✅ YOUR ORIGINAL STYLE REMAINS -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <!-- Futuristic Background Elements -->
+    <!-- ✅ YOUR EXISTING PARTICLES & LAYOUT — NO CHANGES -->
     <div id="particles"></div>
     <div class="bg-grid"></div>
 
@@ -32,7 +44,7 @@
         <p>© 2026 AIMeCHA Initiatives — AI-Powered Engineering Solutions | Kota Kinabalu, Sabah</p>
     </footer>
 
-    <!-- Particles Script -->
+    <!-- ✅ YOUR ORIGINAL PARTICLES.JS SCRIPT — NO CHANGES -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script>
         particlesJS('particles', {
