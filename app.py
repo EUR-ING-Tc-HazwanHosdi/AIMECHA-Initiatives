@@ -41,16 +41,16 @@ def google_verify():
     return send_from_directory('.', 'google2cd12ac9bec35551.html')
 
 # --------------------------
-# ✅ SEO: ROBOTS.TXT & SITEMAP
+# ✅ SEO: ROBOTS.TXT & VALID SITEMAP
 # --------------------------
 @app.route('/robots.txt')
 def robots():
-    txt = f"""User-agent: *
+    txt = """User-agent: *
 Allow: /
 Sitemap: https://aimecha-initiatives.onrender.com/sitemap.xml
 """
     response = make_response(txt)
-    response.headers["Content-Type"] = "text/plain"
+    response.headers["Content-Type"] = "text/plain; charset=utf-8"
     return response
 
 @app.route('/sitemap.xml')
@@ -82,10 +82,11 @@ def sitemap():
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-</urlset>
-"""
+</urlset>"""
+
     response = make_response(xml)
-    response.headers["Content-Type"] = "application/xml"
+    response.headers["Content-Type"] = "application/xml; charset=utf-8"
+    response.headers["Cache-Control"] = "public, max-age=86400"
     return response
 
 # --------------------------
