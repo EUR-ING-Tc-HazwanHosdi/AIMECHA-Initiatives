@@ -1,19 +1,19 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import timedelta
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
-app.secret_key = 'aimecha-secret-key-2026'  # Keep this secret!
+app.secret_key = 'aimecha-secret-key-2026'  # ⚠️ Replace with a secure random key in production
 
 # ✅ DATABASE SETUP
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-app.permanent_session_lifetime = timedelta(days=7)  # Stay logged in 7 days
+app.permanent_session_lifetime = timedelta(days=7)
 db = SQLAlchemy(app)
 
-# ✅ SET YOUR PASSWORD HERE (change it if you want)
-ADMIN_PASSWORD = 'aimecha123'  # ← YOUR PASSWORD
+# ✅ ADMIN CREDENTIALS
+ADMIN_PASSWORD = 'aimecha123'  # ⚠️ Change this to a strong password
 
 # ✅ MESSAGE DATABASE MODEL
 class Message(db.Model):
@@ -28,6 +28,14 @@ class Message(db.Model):
 
 with app.app_context():
     db.create_all()
+
+# --------------------------
+# ✅ GOOGLE SEARCH CONSOLE VERIFICATION
+# --------------------------
+@app.route('/google2cd12ac9bec35551.html')
+def google_verify():
+    # Serves the verification file you placed in your repo root
+    return send_from_directory('.', 'google2cd12ac9bec35551.html')
 
 # --------------------------
 # ROUTES
@@ -55,7 +63,6 @@ def contact():
             flash('⚠️ Please fill in all fields!')
             return redirect(url_for('contact'))
 
-        # ✅ SAVE ONLY TO DATABASE
         new_msg = Message(name=name, email=email, message=message)
         db.session.add(new_msg)
         db.session.commit()
@@ -66,11 +73,10 @@ def contact():
     return render_template('contact.html')
 
 # --------------------------
-# ✅ ADMIN LOGIN & PROTECTED PAGE
+# ✅ ADMIN LOGIN & MESSAGES
 # --------------------------
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
-    # If already logged in → go straight to messages
     if session.get('admin_logged_in'):
         return redirect(url_for('view_messages'))
 
@@ -88,11 +94,9 @@ def admin_login():
 
 @app.route('/admin/messages')
 def view_messages():
-    # Only accessible if logged in
     if not session.get('admin_logged_in'):
         return redirect(url_for('admin_login'))
 
-    # Show all messages (newest first)
     all_messages = Message.query.order_by(Message.created_at.desc()).all()
     return render_template('admin_messages.html', messages=all_messages)
 
