@@ -1,25 +1,25 @@
-from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory
+from flask import Flask, render_template, request, redirect, url_for, flash, session, send_from_directory, make_response
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import timedelta
-from dotenv import load_dotenv  # matches your python-dotenv package
+from dotenv import load_dotenv
 
-# Load variables from .env file (secure for production)
+# Load environment variables
 load_dotenv()
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
 
-# Load secrets from environment variables (never hardcode in production)
+# Security settings
 app.secret_key = os.getenv("SECRET_KEY", "aimecha-dev-key-only")
 ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "aimecha123")
 
-# ✅ DATABASE SETUP
+# Database setup
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=7)
 db = SQLAlchemy(app)
 
-# ✅ MESSAGE DATABASE MODEL
+# Message model
 class Message(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -34,14 +34,62 @@ with app.app_context():
     db.create_all()
 
 # --------------------------
-# ✅ GOOGLE SEARCH CONSOLE VERIFICATION
+# ✅ GOOGLE VERIFICATION
 # --------------------------
 @app.route('/google2cd12ac9bec35551.html')
 def google_verify():
     return send_from_directory('.', 'google2cd12ac9bec35551.html')
 
 # --------------------------
-# ROUTES
+# ✅ SEO: ROBOTS.TXT & SITEMAP
+# --------------------------
+@app.route('/robots.txt')
+def robots():
+    txt = f"""User-agent: *
+Allow: /
+Sitemap: https://aimecha-initiatives.onrender.com/sitemap.xml
+"""
+    response = make_response(txt)
+    response.headers["Content-Type"] = "text/plain"
+    return response
+
+@app.route('/sitemap.xml')
+def sitemap():
+    base_url = "https://aimecha-initiatives.onrender.com"
+    xml = f"""<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>{base_url}/</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>{base_url}/about</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{base_url}/services</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>{base_url}/contact</loc>
+    <lastmod>2026-06-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+</urlset>
+"""
+    response = make_response(xml)
+    response.headers["Content-Type"] = "application/xml"
+    return response
+
+# --------------------------
+# MAIN ROUTES
 # --------------------------
 @app.route('/')
 def home():
@@ -76,7 +124,7 @@ def contact():
     return render_template('contact.html')
 
 # --------------------------
-# ✅ ADMIN LOGIN & MESSAGES
+# ADMIN ROUTES
 # --------------------------
 @app.route('/admin/login', methods=['GET', 'POST'])
 def admin_login():
