@@ -2,18 +2,22 @@ from flask import Flask, render_template, request, redirect, url_for, flash, ses
 from flask_sqlalchemy import SQLAlchemy
 import os
 from datetime import timedelta
+from dotenv import load_dotenv  # matches your python-dotenv package
+
+# Load variables from .env file (secure for production)
+load_dotenv()
 
 app = Flask(__name__, static_folder='static', template_folder='templates')
-app.secret_key = 'aimecha-secret-key-2026'  # ⚠️ Replace with a secure random key in production
+
+# Load secrets from environment variables (never hardcode in production)
+app.secret_key = os.getenv("SECRET_KEY", "aimecha-dev-key-only")
+ADMIN_PASSWORD = os.getenv("ADMIN_PASSWORD", "aimecha123")
 
 # ✅ DATABASE SETUP
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///messages.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.permanent_session_lifetime = timedelta(days=7)
 db = SQLAlchemy(app)
-
-# ✅ ADMIN CREDENTIALS
-ADMIN_PASSWORD = 'aimecha123'  # ⚠️ Change this to a strong password
 
 # ✅ MESSAGE DATABASE MODEL
 class Message(db.Model):
@@ -34,7 +38,6 @@ with app.app_context():
 # --------------------------
 @app.route('/google2cd12ac9bec35551.html')
 def google_verify():
-    # Serves the verification file you placed in your repo root
     return send_from_directory('.', 'google2cd12ac9bec35551.html')
 
 # --------------------------
